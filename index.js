@@ -6,6 +6,7 @@ const { token } = require("./config.json");
 
 const { DisTube } = require("distube");
 const { SpotifyPlugin } = require("@distube/spotify");
+const { YtDlpPlugin } = require("@distube/yt-dlp");
 
 const client = new Client({
   intents: [
@@ -18,14 +19,19 @@ const client = new Client({
 
 client.distube = new DisTube(client, {
   leaveOnStop: false,
-  leaveOnFinish: false,
   emitNewSongOnly: true,
   emitAddSongWhenCreatingQueue: false,
   emitAddListWhenCreatingQueue: false,
-  plugins: [new SpotifyPlugin()],
+  plugins: [
+    new SpotifyPlugin({
+      emitEventsAfterFetching: true,
+    }),
+    new YtDlpPlugin(),
+  ],
 });
 
 client.commands = new Collection();
+
 const commandsPath = path.join(__dirname, "commands");
 const commandFiles = fs
   .readdirSync(commandsPath)
