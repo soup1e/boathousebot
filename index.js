@@ -1,8 +1,8 @@
 const fs = require("fs");
 const path = require("path");
-const { Client, Collection, Events, GatewayIntentBits } = require("discord.js");
 const { token } = require("./config.json");
 
+const { Client, Collection, Events, GatewayIntentBits } = require("discord.js");
 const { DisTube } = require("distube");
 const { SpotifyPlugin } = require("@distube/spotify");
 const { YtDlpPlugin } = require("@distube/yt-dlp");
@@ -42,10 +42,6 @@ for (const file of commandFiles) {
   client.commands.set(command.data.name, command);
 }
 
-client.once(Events.ClientReady, () => {
-  console.log("Ready!");
-});
-
 client.on(Events.InteractionCreate, async (interaction) => {
   if (!interaction.isChatInputCommand()) return;
 
@@ -62,6 +58,10 @@ client.on(Events.InteractionCreate, async (interaction) => {
     console.error(`Error executing ${interaction.commandName}`);
     console.error(error);
   }
+});
+
+client.once(Events.ClientReady, () => {
+  console.log("Ready!");
 });
 
 client.login(token);
