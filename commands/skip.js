@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { EmbedBuilder } = require("discord.js");
+const errors = require("../errors.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -12,21 +13,11 @@ module.exports = {
     const queue = distube.getQueue(interaction);
 
     if (!channel) {
-      const errorEmbed = new EmbedBuilder()
-        .setColor(0xffadad)
-        .setTitle(`⚠️  Error`)
-        .setDescription("Join a voice channel!");
-
-      return interaction.reply({ embeds: [errorEmbed] });
+      return interaction.reply({ embeds: [errors.joinNoChannelError] });
     }
 
     if (!queue) {
-      const errorEmbed = new EmbedBuilder()
-        .setColor(0xffadad)
-        .setTitle(`⚠️  Error`)
-        .setDescription("There is nothing in the queue right now!");
-
-      return interaction.reply({ embeds: [errorEmbed] });
+      return interaction.reply({ embeds: [errors.nothingQueuedError] });
     }
 
     try {
@@ -51,15 +42,7 @@ module.exports = {
       return interaction.reply({ embeds: [embed] });
     } catch (error) {
       console.error(error);
-
-      const errorEmbed = new EmbedBuilder()
-        .setColor(0xffadad)
-        .setTitle(`⛔ Server Error`)
-        .setDescription(
-          "An error occurred while trying to skip the current song"
-        );
-
-      return interaction.reply({ embeds: [errorEmbed] });
+      interaction.reply({ embeds: [errors.fatalBotError] });
     }
   },
 };
