@@ -14,13 +14,22 @@ module.exports = {
       distube.voices.leave(interaction);
 
       const embed = new EmbedBuilder()
-        .setTitle(`Left:`)
+        .setColor(0xffadad)
+        .setTitle(`🎵  Left:`)
         .setDescription(`${channel.name}`);
 
       interaction.reply({ embeds: [embed] });
-    } catch {
+    } catch (error) {
       console.error(error);
-      interaction.reply("Error");
+
+      const errorEmbed = new EmbedBuilder()
+        .setColor(0xffadad)
+        .setTitle(`⛔ Server Error`)
+        .setDescription(
+          "An error occurred while attempting to make the bot leave a voice channel."
+        );
+
+      interaction.reply({ embeds: [errorEmbed] });
     }
   },
 };

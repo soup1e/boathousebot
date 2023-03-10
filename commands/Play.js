@@ -18,7 +18,14 @@ module.exports = {
     const member = interaction.member;
     const channel = member.voice.channel;
 
-    if (!channel) return interaction.editReply("Join a voice channel!");
+    if (!channel) {
+      const errorEmbed = new EmbedBuilder()
+        .setColor(0xffadad)
+        .setTitle(`⚠️  Error`)
+        .setDescription("Join a channel for me to join.");
+
+      return interaction.reply({ embeds: [errorEmbed] });
+    }
 
     try {
       const queue = distube.getQueue(interaction.guild.id);
@@ -26,13 +33,20 @@ module.exports = {
       distube.play(member.voice.channel, query);
 
       const embed = new EmbedBuilder()
+        .setColor(0xcaffbf)
         .setTitle(`🎵  ${member.user.username} Added:`)
         .setDescription(`"${query}"`);
 
       interaction.reply({ embeds: [embed] });
     } catch (error) {
       console.error(error);
-      interaction.reply("Error");
+
+      const errorEmbed = new EmbedBuilder()
+        .setColor(0xffadad)
+        .setTitle(`⛔ Server Error`)
+        .setDescription("An error occurred while trying to play a song.");
+
+      interaction.reply({ embeds: [errorEmbed] });
     }
   },
 };

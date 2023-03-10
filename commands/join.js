@@ -10,21 +10,42 @@ module.exports = {
     const distube = interaction.client.distube;
     const { channel } = interaction.member.voice;
 
-    if (distube.getQueue(interaction))
-      return interaction.reply("I am already playing in a voice channel.");
-    if (!channel) return interaction.reply("Join a channel for me to join.");
+    if (distube.getQueue(interaction)) {
+      const errorEmbed = new EmbedBuilder()
+        .setColor(0xffadad)
+        .setTitle(`⚠️  Error`)
+        .setDescription("I am already playing in a voice channel.");
+
+      return interaction.reply({ embeds: [errorEmbed] });
+    }
+
+    if (!channel) {
+      const errorEmbed = new EmbedBuilder()
+        .setColor(0xffadad)
+        .setTitle(`⚠️  Error`)
+        .setDescription("Join a channel for me to join.");
+
+      return interaction.reply({ embeds: [errorEmbed] });
+    }
 
     try {
       await distube.voices.join(interaction.member.voice.channel);
 
       const embed = new EmbedBuilder()
-        .setTitle(`Joined:`)
+        .setColor(0x9bf6ff)
+        .setTitle(`🎵  Joined`)
         .setDescription(`${channel.name}`);
 
       interaction.reply({ embeds: [embed] });
-    } catch {
+    } catch (error) {
       console.error(error);
-      interaction.reply("Error");
+
+      const errorEmbed = new EmbedBuilder()
+        .setColor(0xffadad)
+        .setTitle(`⛔ Server Error`)
+        .setDescription("An error occurred while trying to join a channel.");
+
+      interaction.reply({ embeds: [errorEmbed] });
     }
   },
 };

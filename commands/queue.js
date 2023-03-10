@@ -8,12 +8,18 @@ module.exports = {
 
   async execute(interaction) {
     const distube = interaction.client.distube;
-    const member = interaction.member;
-    const channel = member.voice.channel;
+
+    if (distube.getQueue(interaction)) {
+      const errorEmbed = new EmbedBuilder()
+        .setColor(0xffadad)
+        .setTitle(`⚠️  Error`)
+        .setDescription("There is nothing playing.");
+
+      return interaction.reply({ embeds: [errorEmbed] });
+    }
 
     try {
       const queue = distube.getQueue(interaction.guild.id);
-      if (!queue) return interaction.reply(`There is nothing playing!`);
 
       const q = queue.songs
         .map(
@@ -45,8 +51,8 @@ module.exports = {
       };
 
       const embed = new EmbedBuilder()
-        .setColor(0x0099ff)
-        .setTitle(`🎵 Current Queue`)
+        .setColor(0xbdb2ff)
+        .setTitle(`🎵  Current Queue`)
         .setDescription(`${q}`)
         .setFooter(footer);
 
