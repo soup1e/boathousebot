@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { EmbedBuilder } = require("discord.js");
+const errors = require("../errors.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -8,28 +9,15 @@ module.exports = {
 
   async execute(interaction) {
     const distube = interaction.client.distube;
-    const { channel } = interaction.member.voice;
 
     try {
       distube.voices.leave(interaction);
 
-      const embed = new EmbedBuilder()
-        .setColor(0xffadad)
-        .setTitle(`🎵  Left:`)
-        .setDescription(`${channel.name}`);
-
+      const embed = new EmbedBuilder().setColor(0xffadad).setTitle(`🎵  Left`);
       interaction.reply({ embeds: [embed] });
     } catch (error) {
       console.error(error);
-
-      const errorEmbed = new EmbedBuilder()
-        .setColor(0xffadad)
-        .setTitle(`⛔ Server Error`)
-        .setDescription(
-          "An error occurred while attempting to make the bot leave a voice channel."
-        );
-
-      interaction.reply({ embeds: [errorEmbed] });
+      interaction.reply({ embeds: [errors.fatalBotError] });
     }
   },
 };

@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { EmbedBuilder } = require("discord.js");
+const errors = require("../errors.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -11,21 +12,11 @@ module.exports = {
     const { channel } = interaction.member.voice;
 
     if (distube.getQueue(interaction)) {
-      const errorEmbed = new EmbedBuilder()
-        .setColor(0xffadad)
-        .setTitle(`⚠️  Error`)
-        .setDescription("I am already playing in a voice channel.");
-
-      return interaction.reply({ embeds: [errorEmbed] });
+      return interaction.reply({ embeds: [errors.alreadyPlayingError] });
     }
 
     if (!channel) {
-      const errorEmbed = new EmbedBuilder()
-        .setColor(0xffadad)
-        .setTitle(`⚠️  Error`)
-        .setDescription("Join a channel for me to join.");
-
-      return interaction.reply({ embeds: [errorEmbed] });
+      return interaction.reply({ embeds: [errors.joinNoChannelError] });
     }
 
     try {
@@ -35,17 +26,10 @@ module.exports = {
         .setColor(0x9bf6ff)
         .setTitle(`🎵  Joined`)
         .setDescription(`${channel.name}`);
-
       interaction.reply({ embeds: [embed] });
     } catch (error) {
       console.error(error);
-
-      const errorEmbed = new EmbedBuilder()
-        .setColor(0xffadad)
-        .setTitle(`⛔ Server Error`)
-        .setDescription("An error occurred while trying to join a channel.");
-
-      interaction.reply({ embeds: [errorEmbed] });
+      interaction.reply({ embeds: [errors.fatalBotError] });
     }
   },
 };

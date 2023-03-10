@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { EmbedBuilder } = require("discord.js");
+const errors = require("../errors.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -8,19 +9,13 @@ module.exports = {
 
   async execute(interaction) {
     const distube = interaction.client.distube;
+    const queue = distube.getQueue(interaction.guild.id);
 
-    if (distube.getQueue(interaction)) {
-      const errorEmbed = new EmbedBuilder()
-        .setColor(0xffadad)
-        .setTitle(`⚠️  Error`)
-        .setDescription("There is nothing playing.");
-
-      return interaction.reply({ embeds: [errorEmbed] });
+    if (!queue) {
+      return interaction.reply({ embeds: [errors.nothingQueuedError] });
     }
 
     try {
-      const queue = distube.getQueue(interaction.guild.id);
-
       const q = queue.songs
         .map(
           (song, i) =>
@@ -34,7 +29,6 @@ module.exports = {
         (acc, song) => acc + song.duration,
         0
       );
-
       const hours = Math.floor(totalDurationInSeconds / 3600)
         .toString()
         .padStart(2, "0");
@@ -59,7 +53,7 @@ module.exports = {
       interaction.reply({ embeds: [embed] });
     } catch (error) {
       console.error(error);
-      interaction.reply("Error");
+      interaction.reply({ embeds: [errors.fatalBotError] });
     }
   },
 };

@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { EmbedBuilder } = require("discord.js");
+const errors = require("../errors.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -16,37 +17,23 @@ module.exports = {
     const distube = interaction.client.distube;
     const query = interaction.options.getString("song");
     const member = interaction.member;
-    const channel = member.voice.channel;
+    const { channel } = member.voice.channel;
 
     if (!channel) {
-      const errorEmbed = new EmbedBuilder()
-        .setColor(0xffadad)
-        .setTitle(`⚠️  Error`)
-        .setDescription("Join a channel for me to join.");
-
-      return interaction.reply({ embeds: [errorEmbed] });
+      return interaction.reply({ embeds: [errors.joinNoChannelError] });
     }
 
     try {
-      const queue = distube.getQueue(interaction.guild.id);
-
       distube.play(member.voice.channel, query);
 
       const embed = new EmbedBuilder()
         .setColor(0xcaffbf)
         .setTitle(`🎵  ${member.user.username} Added:`)
         .setDescription(`"${query}"`);
-
       interaction.reply({ embeds: [embed] });
     } catch (error) {
       console.error(error);
-
-      const errorEmbed = new EmbedBuilder()
-        .setColor(0xffadad)
-        .setTitle(`⛔ Server Error`)
-        .setDescription("An error occurred while trying to play a song.");
-
-      interaction.reply({ embeds: [errorEmbed] });
+      interaction.reply({ embeds: [errors.fatalBotError] });
     }
   },
 };
