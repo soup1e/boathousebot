@@ -13,6 +13,7 @@ module.exports = {
     ),
 
   async execute(interaction) {
+    const distube = interaction.client.distube;
     const query = interaction.options.getString("song");
     const member = interaction.member;
     const channel = member.voice.channel;
@@ -20,9 +21,9 @@ module.exports = {
     if (!channel) return interaction.editReply("Join a voice channel!");
 
     try {
-      const queue = interaction.client.distube.getQueue(interaction.guild.id);
+      const queue = distube.getQueue(interaction.guild.id);
 
-      interaction.client.distube.play(member.voice.channel, query);
+      distube.play(member.voice.channel, query);
 
       const embed = new EmbedBuilder()
         .setTitle(`🎵  ${member.user.username} Added:`)
