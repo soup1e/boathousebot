@@ -25,10 +25,22 @@ const nothingQueuedError = new EmbedBuilder()
   .setTitle(`⚠️  Error`)
   .setDescription("There is nothing queued.");
 
+const notInChannelError = new EmbedBuilder()
+  .setColor(0xffadad)
+  .setTitle(`⚠️  Error`)
+  .setDescription("I am not in a channel.");
+
+const invalidSongIndexError = new EmbedBuilder()
+  .setColor(0xffadad)
+  .setTitle(`⚠️  Error`)
+  .setDescription("Queue does not contain that number of songs.");
+
 module.exports = {
   joinNoChannelError,
   alreadyPlayingError,
   fatalBotError,
   nothingPlayingError,
   nothingQueuedError,
+  notInChannelError,
+  invalidSongIndexError,
 };

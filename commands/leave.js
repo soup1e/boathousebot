@@ -10,6 +10,10 @@ module.exports = {
   async execute(interaction) {
     const distube = interaction.client.distube;
 
+    if (!interaction.guild.members.me.voice.channel) {
+      return interaction.reply({ embeds: [errors.notInChannelError] });
+    }
+
     try {
       distube.voices.leave(interaction);
 

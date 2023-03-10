@@ -32,12 +32,21 @@ module.exports = {
         return interaction.reply({ embeds: [embed] });
       }
 
-      distube.skip(interaction);
+      await distube.skip(interaction);
+
+      const q = queue.songs
+        .map((song, i) =>
+          i === 1
+            ? `Now Playing: ${song.name} \`${song.formattedDuration}\``
+            : null
+        )
+        .filter((str) => str !== null)
+        .join("\n");
 
       const embed = new EmbedBuilder()
         .setColor(0xffd6a5)
         .setTitle(`🎵  ${interaction.member.user.username} Skipped song`)
-        .setDescription("Playing next song...");
+        .setDescription(`${q}`);
 
       return interaction.reply({ embeds: [embed] });
     } catch (error) {

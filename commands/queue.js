@@ -11,6 +11,10 @@ module.exports = {
     const distube = interaction.client.distube;
     const queue = distube.getQueue(interaction.guild.id);
 
+    if (!interaction.guild.members.me.voice.channel) {
+      return interaction.reply({ embeds: [errors.notInChannelError] });
+    }
+
     if (!queue) {
       return interaction.reply({ embeds: [errors.nothingQueuedError] });
     }

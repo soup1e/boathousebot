@@ -17,19 +17,25 @@ module.exports = {
     const distube = interaction.client.distube;
     const query = interaction.options.getString("song");
     const member = interaction.member;
-    const { channel } = member.voice.channel;
+    const channel = member.voice.channel;
 
     if (!channel) {
       return interaction.reply({ embeds: [errors.joinNoChannelError] });
     }
 
     try {
-      distube.play(member.voice.channel, query);
+      await distube.play(channel, query);
+      const queue = distube.getQueue(interaction.guildId);
+      const newSong = queue.songs.slice(-1)[0];
 
       const embed = new EmbedBuilder()
+        .setTitle(`🎵  ${member.user.username} added:`)
         .setColor(0xcaffbf)
-        .setTitle(`🎵  ${member.user.username} Added:`)
-        .setDescription(`"${query}"`);
+        .setDescription(`"${query}" \n [${newSong.name}](${newSong.url})`)
+        .setThumbnail(`${newSong.thumbnail}`)
+        .setTimestamp()
+        .setFooter({ text: `${newSong.formattedDuration}` });
+
       interaction.reply({ embeds: [embed] });
     } catch (error) {
       console.error(error);
