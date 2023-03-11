@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { EmbedBuilder } = require("discord.js");
 const errors = require("../errors.js");
+const ytdl = require("ytdl-core");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -23,20 +24,41 @@ module.exports = {
       return interaction.reply({ embeds: [errors.joinNoChannelError] });
     }
 
+    if (query.startsWith("http://") || query.startsWith("https://")) {
+      if (
+        !ytdl.validateURL(query) &&
+        !query.match(/^https?:\/\/(open.spotify.com)/)
+      ) {
+        return interaction.reply({ embeds: [errors.linkNotSupported] });
+      }
+    }
+
     try {
       await distube.play(channel, query);
       const queue = distube.getQueue(interaction.guildId);
       const newSong = queue.songs.slice(-1)[0];
 
-      const embed = new EmbedBuilder()
-        .setTitle(`🎵  ${member.user.username} added:`)
-        .setColor(0xcaffbf)
-        .setDescription(`"${query}" \n [${newSong.name}](${newSong.url})`)
-        .setThumbnail(`${newSong.thumbnail}`)
-        .setTimestamp()
-        .setFooter({ text: `${newSong.formattedDuration}` });
-      interaction.reply({ embeds: [embed] });
+      let embed;
+      if (query.match(/^https?:\/\/(open.spotify.com)/)) {
+        embed = new EmbedBuilder()
+          .setTitle(`🎵  ${member.user.username} added a song from Spotify`)
+          .setColor(0xcaffbf);
+        return interaction.reply({ embeds: [embed] });
+      } else {
+        embed = new EmbedBuilder()
+          .setTitle(`🎵  ${member.user.username} added a song:`)
+          .setColor(0xcaffbf)
+          .setDescription(`"${query}" \n [${newSong.name}](${newSong.url})`)
+          .setThumbnail(`${newSong.thumbnail}`)
+          .setTimestamp()
+          .setFooter({ text: `${newSong.formattedDuration}` });
+        return interaction.reply({ embeds: [embed] });
+      }
     } catch (error) {
+      if (error.code === "NO_RESULT") {
+        return interaction.reply({ embeds: [errors.songNotFound] });
+      }
+
       console.error(error);
       interaction.reply({ embeds: [errors.fatalBotError] });
     }

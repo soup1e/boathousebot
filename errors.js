@@ -42,6 +42,16 @@ const notANumberError = new EmbedBuilder()
     "The value provided for the `position` option is not a number."
   );
 
+const linkNotSupported = new EmbedBuilder()
+  .setColor(0xffadad)
+  .setTitle(`⚠️  Error`)
+  .setDescription("Link not supported");
+
+const songNotFound = new EmbedBuilder()
+  .setColor(0xffadad)
+  .setTitle(`⚠️  Error`)
+  .setDescription("Song not found");
+
 module.exports = {
   joinNoChannelError,
   alreadyPlayingError,
@@ -51,4 +61,6 @@ module.exports = {
   notInChannelError,
   invalidSongIndexError,
   notANumberError,
+  linkNotSupported,
+  songNotFound,
 };

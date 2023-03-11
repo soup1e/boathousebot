@@ -24,6 +24,7 @@
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
-    "tweetnacl": "^1.0.3"
+    "tweetnacl": "^1.0.3",
+    "ytdl-core": "^4.11.2"
   }
 }
