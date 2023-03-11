@@ -12,4 +12,12 @@ BoatHouseBot is a discord music bot created with Discord.js and DisTube!
 - Leave (/leave)
 - Play (/play song:[url/query])
 - Skip (/skip)
+- Remove (/play number:[song])
 - Queue (/queue)
+- Pause (/pause)
+- Resume (/resume)
+
+🎵 **Supports** 🎵
+
+- YouTube
+- Spotify
