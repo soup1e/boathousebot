@@ -26,9 +26,8 @@ module.exports = {
 
         const embed = new EmbedBuilder()
           .setColor(0xffd6a5)
-          .setTitle(`🎵  ${interaction.member.user.username} Skipped song`)
+          .setTitle(`⏭️  ${interaction.member.user.username} Skipped song`)
           .setDescription("Queue is currently empty");
-
         return interaction.reply({ embeds: [embed] });
       }
 
@@ -45,9 +44,8 @@ module.exports = {
 
       const embed = new EmbedBuilder()
         .setColor(0xffd6a5)
-        .setTitle(`🎵  ${interaction.member.user.username} Skipped song`)
+        .setTitle(`⏭️  ${interaction.member.user.username} Skipped song`)
         .setDescription(`${q}`);
-
       return interaction.reply({ embeds: [embed] });
     } catch (error) {
       console.error(error);

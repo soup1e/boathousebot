@@ -17,7 +17,7 @@ module.exports = {
     try {
       distube.voices.leave(interaction);
 
-      const embed = new EmbedBuilder().setColor(0xffadad).setTitle(`🎵  Left`);
+      const embed = new EmbedBuilder().setColor(0xffadad).setTitle(`👋  Left`);
       interaction.reply({ embeds: [embed] });
     } catch (error) {
       console.error(error);

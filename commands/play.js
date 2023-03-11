@@ -35,7 +35,6 @@ module.exports = {
         .setThumbnail(`${newSong.thumbnail}`)
         .setTimestamp()
         .setFooter({ text: `${newSong.formattedDuration}` });
-
       interaction.reply({ embeds: [embed] });
     } catch (error) {
       console.error(error);

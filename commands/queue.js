@@ -54,6 +54,10 @@ module.exports = {
         .setDescription(`${q}`)
         .setFooter(footer);
 
+      if (queue.paused) {
+        embed.setTitle(`🎵  Current Queue \nPAUSED`);
+      }
+
       interaction.reply({ embeds: [embed] });
     } catch (error) {
       console.error(error);

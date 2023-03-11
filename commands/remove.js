@@ -17,6 +17,10 @@ module.exports = {
     const queue = distube.getQueue(interaction);
     const tracks = interaction.options.getString("number");
 
+    if (isNaN(tracks)) {
+      return interaction.reply({ embeds: [errors.notANumberError] });
+    }
+
     if (!queue) {
       return interaction.reply({ embeds: [errors.nothingQueuedError] });
     }
@@ -37,7 +41,6 @@ module.exports = {
         .setDescription(`"${song.name}"`)
         .setFooter({ text: `${song.url} - ${song.formattedDuration}` })
         .setTimestamp();
-
       interaction.reply({ embeds: [embed] });
     } catch (error) {
       interaction.reply({ embeds: [errors.fatalBotError] });

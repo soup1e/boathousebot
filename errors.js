@@ -35,6 +35,13 @@ const invalidSongIndexError = new EmbedBuilder()
   .setTitle(`⚠️  Error`)
   .setDescription("Queue does not contain that number of songs.");
 
+const notANumberError = new EmbedBuilder()
+  .setColor(0xffadad)
+  .setTitle(`⚠️  Error`)
+  .setDescription(
+    "The value provided for the `position` option is not a number."
+  );
+
 module.exports = {
   joinNoChannelError,
   alreadyPlayingError,
@@ -43,4 +50,5 @@ module.exports = {
   nothingQueuedError,
   notInChannelError,
   invalidSongIndexError,
+  notANumberError,
 };
