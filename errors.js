@@ -52,6 +52,11 @@ const songNotFound = new EmbedBuilder()
   .setTitle(`⚠️  Error`)
   .setDescription("Song not found");
 
+const commandNotFound = new EmbedBuilder()
+  .setColor(0xffadad)
+  .setTitle(`⚠️  Error`)
+  .setDescription("No Command Found");
+
 module.exports = {
   joinNoChannelError,
   alreadyPlayingError,
@@ -63,4 +68,5 @@ module.exports = {
   notANumberError,
   linkNotSupported,
   songNotFound,
+  commandNotFound,
 };
