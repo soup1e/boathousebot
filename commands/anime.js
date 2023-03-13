@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { EmbedBuilder } = require("discord.js");
 const animes = require("../controllers/animes");
+const errors = require("../errors.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -19,9 +20,13 @@ module.exports = {
 
       const data = await animes.searchAnime(query);
 
+      if (data.meta.count === 0) {
+        return interaction.reply({ embeds: [errors.animeNotFound] });
+      }
+
       const embed = new EmbedBuilder()
         .setColor("#FFC0CB")
-        .setTitle(data.data[0].attributes.titles.en_us)
+        .setTitle(data.data[0].attributes.canonicalTitle)
         .setDescription(`Description: \n${data.data[0].attributes.description}`)
         .setThumbnail(data.data[0].attributes.posterImage.original)
         .addFields(

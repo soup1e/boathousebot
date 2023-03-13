@@ -2,7 +2,7 @@ const fetch = require("node-fetch");
 module.exports = {
   async searchAnime(query) {
     try {
-      const formattedQuery = query.replace(/ /g, "-");
+      const formattedQuery = query.replace(/[^a-z0-9]+/gi, "-");
 
       const response = await fetch(
         `https://kitsu.io/api/edge/anime?filter[text]=${formattedQuery}`
