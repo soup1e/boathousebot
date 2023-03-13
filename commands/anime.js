@@ -32,19 +32,28 @@ module.exports = {
         .addFields(
           {
             name: "Episodes",
-            value: data.data[0].attributes.episodeCount.toString(),
+            value:
+              data.data[0].attributes.episodeCount == null
+                ? "Unreleased"
+                : data.data[0].attributes.episodeCount.toString(),
             inline: true,
           },
           {
             name: "Score",
-            value: data.data[0].attributes.averageRating.toString(),
+            value:
+              data.data[0].attributes.averageRating == null
+                ? "none"
+                : data.data[0].attributes.averageRating.toString(),
             inline: true,
           },
           {
             name: "Release Date",
-            value: new Date(
-              data.data[0].attributes.createdAt
-            ).toLocaleDateString(),
+            value:
+              data.data[0].attributes.createdAt == null
+                ? "Unreleased"
+                : new Date(
+                    data.data[0].attributes.createdAt
+                  ).toLocaleDateString(),
             inline: true,
           }
         )

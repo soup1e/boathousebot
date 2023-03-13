@@ -62,6 +62,11 @@ const animeNotFound = new EmbedBuilder()
   .setTitle(`⚠️  Error`)
   .setDescription("No Anime Found");
 
+const waifuNotFound = new EmbedBuilder()
+  .setColor(0xffadad)
+  .setTitle(`⚠️  Error`)
+  .setDescription("No Anime Found");
+
 module.exports = {
   joinNoChannelError,
   alreadyPlayingError,
@@ -75,4 +80,5 @@ module.exports = {
   songNotFound,
   commandNotFound,
   animeNotFound,
+  waifuNotFound,
 };

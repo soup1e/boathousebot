@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { EmbedBuilder } = require("discord.js");
+const errors = require("../errors.js");
 
 const waifus = require("../controllers/waifus");
 
@@ -49,6 +50,8 @@ module.exports = {
 
     try {
       const data = await waifus.getWaifu(category);
+
+      if (!data) return interaction.reply({ embeds: [errors.waifuNotFound] });
 
       const embed = new EmbedBuilder()
         .setColor("#FFC0CB")
