@@ -14,4 +14,30 @@ module.exports = {
       throw new Error("An error occurred while searching for anime.");
     }
   },
+
+  async getRandomAnime(type) {
+    let url;
+    if (type === "movie") {
+      url = `https://kitsu.io/api/edge/anime?filter[subtype]=movie&page[offset]=${Math.floor(
+        Math.random() * 2000
+      )}&page[limit]=1`;
+    } else if (type === "tv") {
+      url = `https://kitsu.io/api/edge/anime?filter[subtype]=TV&page[offset]=${Math.floor(
+        Math.random() * 2000
+      )}&page[limit]=1`;
+    } else {
+      url = `https://kitsu.io/api/edge/anime?page[offset]=${Math.floor(
+        Math.random() * 2000
+      )}&page[limit]=1`;
+    }
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+      throw new Error("An error occurred while searching for anime.");
+    }
+  },
 };
