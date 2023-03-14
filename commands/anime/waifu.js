@@ -1,8 +1,8 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { EmbedBuilder } = require("discord.js");
-const errors = require("../errors.js");
 
-const waifus = require("../controllers/waifus");
+const waifus = require("../../controllers/waifus.js");
+const errors = require("../../errors.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
