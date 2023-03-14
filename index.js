@@ -33,13 +33,18 @@ client.distube = new DisTube(client, {
 
 client.commands = new Collection();
 
-const commandFiles = fs
-  .readdirSync("./commands")
-  .filter((file) => file.endsWith(".js"));
+const commandFolders = fs.readdirSync("./commands");
 
-for (const file of commandFiles) {
-  const command = require(`./commands/${file}`);
-  client.commands.set(command.data.name, command);
+for (const folder of commandFolders) {
+  const folderPath = path.join(__dirname, "commands", folder);
+  const commandFiles = fs
+    .readdirSync(folderPath)
+    .filter((file) => file.endsWith(".js"));
+
+  for (const file of commandFiles) {
+    const command = require(`${folderPath}/${file}`);
+    client.commands.set(command.data.name, command);
+  }
 }
 
 client.on("interactionCreate", async (interaction) => {
