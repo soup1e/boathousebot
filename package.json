@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "cmds": "node deploy-commands.js"
+    "cmds": "node utils/deploy-commands.js"
   },
   "dependencies": {
     "@discordjs/opus": "^0.9.0",

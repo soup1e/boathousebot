@@ -4,20 +4,29 @@
 
 ℹ️ **About** ℹ️
 
-BoatHouseBot is a discord music bot created with Discord.js and DisTube!
+BoatHouseBot is a discord slash command bot created with Discord.js, DisTube and various Apis!
 
-🎵 **Commands** 🎵
+🎵 **Music Commands** 🎵
 
 - Join (/join)
 - Leave (/leave)
-- Play (/play song:[url/query])
+- Play (/play song:[url/name])
 - Skip (/skip)
 - Remove (/play number:[song])
 - Queue (/queue)
 - Pause (/pause)
 - Resume (/resume)
 
+📺 **Anime Commands** 📺
+
+- Search (/search query:[name] ?type:[anime/manga/tv])
+- Random (/search type:[anime/manga/tv])
+- Waifu (/waifu type:[list])
+
 🎵 **Supports** 🎵
 
+- Discord Slash Commands
 - YouTube
 - Spotify
+- Kitsu API
+- Waifu.pics API
