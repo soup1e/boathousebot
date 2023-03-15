@@ -1,5 +1,6 @@
+require("dotenv").config();
+
 const { REST, Routes } = require("discord.js");
-const { clientId, guildId, token } = require("../config.json");
 const fs = require("node:fs");
 const path = require("node:path");
 
@@ -25,7 +26,7 @@ for (const subdirectory of subdirectories) {
   }
 }
 
-const rest = new REST({ version: "10" }).setToken(token);
+const rest = new REST({ version: "10" }).setToken(process.env.TOKEN);
 
 (async () => {
   try {
@@ -34,15 +35,18 @@ const rest = new REST({ version: "10" }).setToken(token);
     );
 
     // FOR PRODUCTION GLOBAL COMMANDS
-    // const data = await rest.put(Routes.applicationCommands(clientId), {
-    //   body: commands,
-    // });
+    const data = await rest.put(
+      Routes.applicationCommands(process.env.CLIENT_ID),
+      {
+        body: commands,
+      }
+    );
 
     // FOR DEVELOPMENT SERVER COMMANDS
-    const data = await rest.put(
-      Routes.applicationGuildCommands(clientId, guildId),
-      { body: commands }
-    );
+    // const data = await rest.put(
+    //   Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID),
+    //   { body: commands }
+    // );
 
     console.log(
       `Successfully reloaded ${data.length} application (/) commands.`

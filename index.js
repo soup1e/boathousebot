@@ -1,6 +1,7 @@
+require("dotenv").config();
+
 const fs = require("fs");
 const path = require("path");
-const { token } = require("./config.json");
 
 const { Client, Collection, Events, GatewayIntentBits } = require("discord.js");
 const { DisTube } = require("distube");
@@ -76,5 +77,5 @@ client.on("error", (error) => {
 });
 
 (async () => {
-  await client.login(token);
+  await client.login(process.env.TOKEN);
 })();
