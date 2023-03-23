@@ -3,10 +3,8 @@ require("dotenv").config();
 const fs = require("fs");
 const path = require("path");
 
-const { Client, Collection, Events, GatewayIntentBits } = require("discord.js");
+const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const { DisTube } = require("distube");
-const { SpotifyPlugin } = require("@distube/spotify");
-const { YtDlpPlugin } = require("@distube/yt-dlp");
 
 const errors = require("./errors.js");
 
@@ -24,12 +22,6 @@ client.distube = new DisTube(client, {
   emitNewSongOnly: true,
   emitAddSongWhenCreatingQueue: false,
   emitAddListWhenCreatingQueue: false,
-  plugins: [
-    new SpotifyPlugin({
-      emitEventsAfterFetching: true,
-    }),
-    new YtDlpPlugin(),
-  ],
 });
 
 client.commands = new Collection();
