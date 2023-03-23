@@ -36,25 +36,27 @@ module.exports = {
     try {
       distube.play(channel, query);
       console.log("PLAYING MUSIC");
-      const queue = distube.getQueue(interaction.guildId);
-      const newSong = queue.songs.slice(-1)[0];
+      // const queue = distube.getQueue(interaction.guildId);
+      // const newSong = queue.songs.slice(-1)[0];
 
-      let embed;
-      if (query.match(/^https?:\/\/(open.spotify.com)/)) {
-        embed = new EmbedBuilder()
-          .setTitle(`🎵  ${member.user.username} added a song from Spotify`)
-          .setColor(0xcaffbf);
-        return interaction.reply({ embeds: [embed] });
-      } else {
-        embed = new EmbedBuilder()
-          .setTitle(`🎵  ${member.user.username} added a song:`)
-          .setColor(0xcaffbf)
-          .setDescription(`"${query}" \n [${newSong.name}](${newSong.url})`)
-          .setThumbnail(`${newSong.thumbnail}`)
-          .setTimestamp()
-          .setFooter({ text: `${newSong.formattedDuration}` });
-        return interaction.reply({ embeds: [embed] });
-      }
+      // let embed;
+      // if (query.match(/^https?:\/\/(open.spotify.com)/)) {
+      //   embed = new EmbedBuilder()
+      //     .setTitle(`🎵  ${member.user.username} added a song from Spotify`)
+      //     .setColor(0xcaffbf);
+      //   return interaction.reply({ embeds: [embed] });
+      // } else {
+      //   embed = new EmbedBuilder()
+      //     .setTitle(`🎵  ${member.user.username} added a song:`)
+      //     .setColor(0xcaffbf)
+      //     .setDescription(`"${query}" \n [${newSong.name}](${newSong.url})`)
+      //     .setThumbnail(`${newSong.thumbnail}`)
+      //     .setTimestamp()
+      //     .setFooter({ text: `${newSong.formattedDuration}` });
+      //   return interaction.reply({ embeds: [embed] });
+      // }
+
+      return interaction.reply("Music queued");
     } catch (error) {
       if (error.code === "NO_RESULT") {
         return interaction.reply({ embeds: [errors.songNotFound] });
