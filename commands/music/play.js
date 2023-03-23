@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { EmbedBuilder } = require("discord.js");
 const errors = require("../../errors.js");
-const ytdl = require("ytdl-core");
+// const ytdl = require("ytdl-core");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -24,17 +24,18 @@ module.exports = {
       return interaction.reply({ embeds: [errors.joinNoChannelError] });
     }
 
-    if (query.startsWith("http://") || query.startsWith("https://")) {
-      if (
-        !ytdl.validateURL(query) &&
-        !query.match(/^https?:\/\/(open.spotify.com)/)
-      ) {
-        return interaction.reply({ embeds: [errors.linkNotSupported] });
-      }
-    }
+    // if (query.startsWith("http://") || query.startsWith("https://")) {
+    //   if (
+    //     !ytdl.validateURL(query) &&
+    //     !query.match(/^https?:\/\/(open.spotify.com)/)
+    //   ) {
+    //     return interaction.reply({ embeds: [errors.linkNotSupported] });
+    //   }
+    // }
 
     try {
-      await distube.play(channel, query);
+      distube.play(channel, query);
+      console.log("PLAYING MUSIC");
       const queue = distube.getQueue(interaction.guildId);
       const newSong = queue.songs.slice(-1)[0];
 
